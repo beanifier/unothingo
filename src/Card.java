@@ -9,7 +9,7 @@ public class Card {
     public static Boolean canGoOnto(Card topCard, Card newCard) {
         return topCard.color == newCard.color || topCard.type == newCard.type;
     }
-    public static CardFunctionType gCardFunctionTypeFromCardType(CardType type) {
+    public static CardFunctionType getCardFunctionTypeFromCardType(CardType type) {
         switch (type) {
             case SKIP:
                 return CardFunctionType.SKIP;
