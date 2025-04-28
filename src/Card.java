@@ -26,6 +26,22 @@ public class Card {
         }
     }
 
+    public static boolean isWild(Card card) {
+        return card.type == CardType.WILD || card.type == CardType.WILD_DRAW4;
+    }
+
+    public static boolean isNumber(Card card) {
+        return card.type == CardType.NUM0 || card.type == CardType.NUM1 || card.type == CardType.NUM2 || card.type == CardType.NUM3 || card.type == CardType.NUM4 || card.type == CardType.NUM5 || card.type == CardType.NUM6 || card.type == CardType.NUM7 || card.type == CardType.NUM8 || card.type == CardType.NUM9;
+    }
+
+    public static boolean isAction(Card card) {
+        return card.type == CardType.SKIP || card.type == CardType.REVERSE;
+    }
+
+    public static boolean isDraw(Card card) {
+        return card.type == CardType.DRAW2 || card.type == CardType.WILD_DRAW4;
+    }
+
     public String toString() {
         String colorString = "";
         switch (color) {
@@ -54,13 +70,13 @@ public class Card {
                 name = " <";
                 break;
             case DRAW2:
-                name = "+2";
+                name = " +2";
                 break;
             case WILD:
                 name = " #";
                 break;
             case WILD_DRAW4:
-                name = "+4";
+                name = " +4";
                 break;
             case NUM0:
                 name = " 0";

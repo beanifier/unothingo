@@ -13,7 +13,7 @@ public class App {
         Game game = new Game(players);
         while (!game.isGameOver) {
             game.playMove();
-            TimeUnit.MILLISECONDS.sleep(100);
+            //TimeUnit.MILLISECONDS.sleep(100);
         }
     }
 }

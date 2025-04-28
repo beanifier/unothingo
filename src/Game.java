@@ -53,6 +53,11 @@ public class Game {
             drawPile = discardPile;
             discardPile = new CardStack();
             discardPile.addCard(topCard);
+            for (Card card : drawPile.cards) {
+                if (Card.isWild(card)) {
+                    card.color = CardColor.WILD;
+                }
+            }
         }
     }
     public boolean isMoveLegal(GameMove move) throws Exception {
