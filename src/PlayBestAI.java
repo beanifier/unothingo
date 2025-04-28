@@ -1,5 +1,5 @@
-public class PlayWorstAI extends PlayerAI {
-    public PlayWorstAI() {
+public class PlayBestAI extends PlayerAI {
+    public PlayBestAI() {
         super();
     }
 
@@ -29,7 +29,7 @@ public class PlayWorstAI extends PlayerAI {
         if (card.color == topCard.color) {
             value -= 20;
         }
-        return -value;
+        return value;
     }
 
     public void sort() {

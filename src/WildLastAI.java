@@ -1,5 +1,5 @@
-public class PlayWorstAI extends PlayerAI {
-    public PlayWorstAI() {
+public class WildLastAI extends PlayerAI {
+    public WildLastAI() {
         super();
     }
 
@@ -7,10 +7,10 @@ public class PlayWorstAI extends PlayerAI {
         int value = 0;
         switch (card.type) {
             case WILD_DRAW4:
-                value = 500;
+                value = -450;
                 break;
             case WILD:
-                value = 450;
+                value = -500;
                 break;
             case SKIP:
                 value = 350;
@@ -29,7 +29,7 @@ public class PlayWorstAI extends PlayerAI {
         if (card.color == topCard.color) {
             value -= 20;
         }
-        return -value;
+        return value;
     }
 
     public void sort() {
@@ -45,13 +45,28 @@ public class PlayWorstAI extends PlayerAI {
         }
     }
 
+    public boolean aaaisCardIdLegal(int index) throws Exception {
+        Card card = player.hand.getCard(index);
+        boolean hasNotWild = false;
+        for (int i = 0; i < player.hand.size(); i++) {
+            if ((!Card.isWild(card(i))) && isCardIdLegal(i)) {
+                hasNotWild = true;
+                break;
+            }
+        }
+        if (hasNotWild && Card.isWild(card)) {
+            return false;
+        }
+        return isCardIdLegal(index);
+    }
+
     @Override
     public GameMove playTurn(GameMove lastMove) throws Exception {
         sort();
         GameMove move = new GameMove();
         int index = -1;
         for (int i = 0; i < player.hand.size(); i++) {
-            if (isCardIdLegal(i) && (player.game.drawCount > 0 ? Card.isDraw(card(i)) : true)) {
+            if (aaaisCardIdLegal(i) && (player.game.drawCount > 0 ? Card.isDraw(card(i)) : true)) {
                 index = i;
                 break;
             }

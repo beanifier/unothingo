@@ -8,6 +8,8 @@ public class Game {
     public GameMove lastMove;
     public int drawCount;
     public boolean isGameOver;
+    public int winnerIndex;
+    public boolean didDraw;
     public Game(Player[] playerList) {
         players = playerList;
         playerCount = playerList.length;
@@ -31,6 +33,13 @@ public class Game {
         for (int i = 0; i < 4; i++) {
             drawPile.addCard(new Card(CardColor.WILD, CardType.WILD));
             drawPile.addCard(new Card(CardColor.WILD, CardType.WILD_DRAW4));
+        }
+        if (playerCount == 2) {
+            for (Card card : drawPile.cards) {
+                if (card.type == CardType.REVERSE) {
+                    card.type = CardType.SKIP;
+                }
+            }
         }
         drawPile.shuffle();
         discardPile.addCard(drawPile.drawCard());
@@ -95,6 +104,7 @@ public class Game {
         }
         if (isMoveLegal(move)) {
             if (drawCount > 0) {
+                didDraw = false;
                 if (move.isDraw) {
                     for (int i = 0; i <= drawCount; i++) {
                         Card card = drawPile.drawCard();
@@ -112,9 +122,11 @@ public class Game {
                     }
                 }
             } else {
+                
                 if (move.isDraw) {
                     Card card = drawPile.drawCard();
                     players[currentPlayerIndex].addCard(card);
+                    
                 } else {
                     drawCount = 0;
                     if (move.playCard.type == CardType.REVERSE) {
@@ -138,14 +150,16 @@ public class Game {
                 }
             }
             nextPlayerIndex = isForward ? (currentPlayerIndex + (isSkip ? 2 : 1)) % playerCount : (currentPlayerIndex - (isSkip ? 2 : 1) + playerCount) % playerCount;
+            
             move.play(players[nextPlayerIndex]);
         } else {
             throw new Exception("Move is not legal" + move);
         }
         for (int i = 0; i < players.length; i++) {
             if (players[i].hand.size() == 0) {
-                System.out.println("Player " + (i + 1) + " wins!");
+                // System.out.println("Player " + (i + 1) + " wins! " + players[i].playerAI.getClass().getSimpleName());
                 isGameOver = true;
+                winnerIndex = i;
                 return;
             }
         }
@@ -162,12 +176,12 @@ public class Game {
             for (int j = 0; j < players[i].hand.size(); j++) {
                 sb.append(players[i].hand.getCard(j));
             }
-            System.out.println(sb.toString());
+            // System.out.println(sb.toString());
         }
-        System.out.println("Discard pile: " + discardPile.getTopCard());
-        System.out.println("Next Player: " + (currentPlayerIndex+1));
-        System.out.println("Draw Count: " + drawCount);
-        System.out.println("-");
+        // System.out.println("Discard pile: " + discardPile.getTopCard());
+        // System.out.println("Next Player: " + (currentPlayerIndex+1));
+        // System.out.println("Draw Count: " + drawCount);
+        // System.out.println("-");
         checkDrawPile();
     }
 }

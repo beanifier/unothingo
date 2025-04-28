@@ -19,7 +19,7 @@ public class RandomAI extends PlayerAI {
         } else {
             Card card = player.hand.getCard(index);
             move = new GameMove(player, index);
-            chooseRandomWild(card);
+            chooseBestWild(card);
         }
         return move;
     }

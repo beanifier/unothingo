@@ -38,4 +38,27 @@ public abstract class PlayerAI {
             card.color = CardColor.values()[(int) (Math.random() * 4)];
         }
     }
+
+    public void chooseBestWild(Card card) {
+        if (Card.isWild(card)) {
+            CardColor bestColor = CardColor.RED;
+            int maxCount = 0;
+            for (CardColor color : CardColor.values()) {
+                int count = 0;
+                for (int i = 0; i < player.hand.size(); i++) {
+                    if (player.hand.getCard(i).color == color) {
+                        count++;
+                    }
+                }
+                if (count > maxCount) {
+                    maxCount = count;
+                    bestColor = color;
+                }
+            }
+            if (bestColor == CardColor.WILD) {
+                bestColor = CardColor.RED;
+            }
+            card.color = bestColor;
+        }
+    }
 }
