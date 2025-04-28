@@ -4,6 +4,7 @@ public class Player {
     public PlayerAI playerAI;
     public Player(PlayerAI ai) throws Exception {
         hand = new CardStack();
+        ai.setPlayer(this);
         playerAI = ai;
     }
     public void addCard(Card card) {

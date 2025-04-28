@@ -16,6 +16,7 @@ public class GameMove {
         } else {
             throw new Exception("Invalid card index");
         }
+        // System.out.println(playCard);
         cardFunction = Card.getCardFunctionTypeFromCardType(playCard.type);
         cardType = playCard.type;
         isDraw = false;
@@ -42,5 +43,17 @@ public class GameMove {
     public void play(Player next) {
         nextPlayer = next;
         didPlay = true;
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Move: \n");
+        sb.append("\t Player: ").append(player).append("\n");
+        sb.append("\t Card: ").append(playCard).append("\n");
+        sb.append("\t Card Index: ").append(playCardIndex).append("\n");
+        sb.append("\t Is Draw: ").append(isDraw).append("\n");
+        sb.append("\t Did Play: ").append(didPlay).append("\n");
+        sb.append("\t Next Player: ").append(nextPlayer).append("\n");
+        return sb.toString();
     }
 }
